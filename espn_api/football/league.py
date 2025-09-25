@@ -11,6 +11,7 @@ from .player import Player
 from .activity import Activity
 from .settings import Settings
 from .utils import power_points, two_step_dominance
+from ..utils.utils import build_fantasy_filter_headers
 from .constant import POSITION_MAP, ACTIVITY_MAP, TRANSACTION_TYPES
 from .transaction import Transaction
 from .helper import (
@@ -254,7 +255,7 @@ class League(BaseLeague):
         }
 
         filters = {"topics":{"filterType":{"value":["ACTIVITY_TRANSACTIONS"]},"limit":size,"limitPerMessageSet":{"value":25},"offset":offset,"sortMessageDate":{"sortPriority":1,"sortAsc":False},"sortFor":{"sortPriority":2,"sortAsc":False},"filterIncludeMessageTypeIds":{"value":msg_types}}}
-        headers = {'x-fantasy-filter': json.dumps(filters)}
+        headers = build_fantasy_filter_headers(filters)
         data = self.espn_request.league_get(extend='/communication/', params=params, headers=headers)
         data = data['topics']
         activity = [Activity(topic, self.player_map, self.get_team_data, self.player_info) for topic in data]
@@ -303,7 +304,7 @@ class League(BaseLeague):
         }
 
         filters = {"schedule":{"filterMatchupPeriodIds":{"value":[matchup_period]}}}
-        headers = {'x-fantasy-filter': json.dumps(filters)}
+        headers = build_fantasy_filter_headers(filters)
         data = self.espn_request.league_get(params=params, headers=headers)
 
         schedule = data['schedule']
@@ -361,7 +362,7 @@ class League(BaseLeague):
             'scoringPeriodId': week,
         }
         filters = {"players":{"filterStatus":{"value":["FREEAGENT","WAIVERS"]},"filterSlotIds":{"value":slot_filter},"limit":size,"sortPercOwned":{"sortPriority":1,"sortAsc":False},"sortDraftRanks":{"sortPriority":100,"sortAsc":True,"value":"STANDARD"}}}
-        headers = {'x-fantasy-filter': json.dumps(filters)}
+        headers = build_fantasy_filter_headers(filters)
 
         data = self.espn_request.league_get(params=params, headers=headers)
 
@@ -414,7 +415,7 @@ class League(BaseLeague):
         }
 
         filters = {"transactions":{"filterType":{"value":list(types)}}}
-        headers = {'x-fantasy-filter': json.dumps(filters)}
+        headers = build_fantasy_filter_headers(filters)
 
         data = self.espn_request.league_get(params=params, headers=headers)
         if 'transactions' not in data:

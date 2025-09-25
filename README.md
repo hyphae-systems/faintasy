@@ -4,6 +4,29 @@
 
 ## ESPN API
 This package uses ESPN's Fantasy API to extract data from any public or private league for **Fantasy Football and Basketball (NHL, MLB, and WNBA are in development)**.  
+
+## Unified Fantasy Advisor (CLI)
+
+A streamlined, single-entry experience is available via a CLI that summarizes your week, suggests lineup improvements, and surfaces free agents.
+
+Example usage:
+
+```bash
+ff-advisor --league-id 123456 --year 2024 --espn-s2 YOUR_ESPN_S2 --swid YOUR_SWID --week 3
+```
+
+Flags:
+- `--league-id` Your ESPN fantasy league id
+- `--year` Season year (e.g. 2024)
+- `--espn-s2` ESPN auth cookie value (optional for public leagues)
+- `--swid` ESPN SWID cookie value (optional for public leagues)
+- `--week` Week to analyze (defaults to current week)
+
+Output includes:
+- Weekly scoreboard summary
+- Power rankings snapshot
+- Lineup improvement tips (bench vs start deltas)
+- Top free agents by projected points and ownership
 Please feel free to make suggestions, bug reports, and pull request for features or fixes!
 
 This package was inspired and based off of [rbarton65/espnff](https://github.com/rbarton65/espnff).
