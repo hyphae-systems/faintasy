@@ -25,5 +25,10 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
     ],
+    entry_points={
+        'console_scripts': [
+            'ff-advisor=ff_app.cli:main',
+        ],
+    },
 
 )

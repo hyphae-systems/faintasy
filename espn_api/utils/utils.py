@@ -1,4 +1,7 @@
-# Helper functions for json parsing and power rankings
+"""Utility helpers used across the ESPN API package."""
+
+import json
+
 
 def json_parsing(obj, key):
     """Recursively pull values of specified key from nested JSON."""
@@ -19,3 +22,11 @@ def json_parsing(obj, key):
 
     results = extract(obj, arr, key)
     return results[0] if results else results
+
+
+def build_fantasy_filter_headers(filters):
+    """Create the `x-fantasy-filter` headers dict from a filters object.
+
+    This centralizes header construction and prevents repetition.
+    """
+    return {'x-fantasy-filter': json.dumps(filters)}
